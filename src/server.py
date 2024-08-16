@@ -33,10 +33,11 @@ def start_server(
         print(f"Started server at port {port}.")
 
         with conn:
-            send_message(conn, f"{p}, {g}")
 
             while True:
                 p, g = generate_public_diffie_hellman_parameters()
+                send_message(conn, f"{p}, {g}")
+                
                 private_key = generate_private_diffie_hellman_key(p)
                 public_key = generate_public_diffie_hellman_key(p, g, private_key)
                 send_message(conn, public_key)

@@ -23,12 +23,11 @@ def start_client(host: str = "", port: int = 1300, bufsize: int = 1024):
     with socket(AF_INET, SOCK_STREAM) as client:
         client.connect(address)
 
-
         while True:
             diffie_hellman_params = receive_message(client, bufsize)
             p, g = _parse_diffie_hellman_params(diffie_hellman_params)
             private_key = generate_private_diffie_hellman_key(p)
-            
+
             server_key = int(receive_message(client, bufsize))
 
             public_key = generate_public_diffie_hellman_key(p, g, private_key)
