@@ -32,6 +32,8 @@ def start_server(
 
         conn, _ = server.accept()
 
+        print(f"Started server at {host}:{port}.")
+
         with conn:
             send_message(conn, f"{p}, {g}")
 
@@ -43,8 +45,6 @@ def start_server(
             secret = compute_shared_secret(p, private_key, client_key)
 
             message = receive_message(conn, bufsize)
-            print(f"Mensagem encriptada: {message}")
-
             message = encrypt_using_caesar_cypher(message, -secret)
 
             print(f"Mensagem recebida: {message}")
