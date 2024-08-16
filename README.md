@@ -70,5 +70,5 @@ Antes de iniciar a comunicação, o servidor e o cliente realizam a troca de cha
 
 Ao enviar a mensagem, o cliente utiliza a chave determinada para encriptá-la, de modo que um *man-in-the-middle* não seja capaz de interceptá-la na sua forma original, conforme observado abaixo pelo *software* Wireshark.
 
-![img](images/wireshark1.PNG)
-![img](images/wireshark2.PNG)
+![img](images/wireshark1.png)
+![img](images/wireshark2.png)
