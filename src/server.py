@@ -23,8 +23,6 @@ def start_server(
     """
 
     address = (host, port)
-    p, g = generate_public_diffie_hellman_parameters()
-    private_key = generate_private_diffie_hellman_key(p)
 
     with socket(AF_INET, SOCK_STREAM) as server:
         server.bind(address)
@@ -37,14 +35,17 @@ def start_server(
         with conn:
             send_message(conn, f"{p}, {g}")
 
-            public_key = generate_public_diffie_hellman_key(p, g, private_key)
-            send_message(conn, public_key)
+            while True:
+                p, g = generate_public_diffie_hellman_parameters()
+                private_key = generate_private_diffie_hellman_key(p)
+                public_key = generate_public_diffie_hellman_key(p, g, private_key)
+                send_message(conn, public_key)
 
-            client_key = int(receive_message(conn, bufsize))
+                client_key = int(receive_message(conn, bufsize))
 
-            secret = compute_shared_secret(p, private_key, client_key)
+                secret = compute_shared_secret(p, private_key, client_key)
 
-            message = receive_message(conn, bufsize)
-            message = encrypt_using_caesar_cypher(message, -secret)
+                message = receive_message(conn, bufsize)
+                message = encrypt_using_caesar_cypher(message, -secret)
 
-            print(f"Mensagem recebida: {message}")
+                print(f"Mensagem recebida: {message}")

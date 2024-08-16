@@ -23,21 +23,23 @@ def start_client(host: str = "", port: int = 1300, bufsize: int = 1024):
     with socket(AF_INET, SOCK_STREAM) as client:
         client.connect(address)
 
-        diffie_hellman_params = receive_message(client, bufsize)
-        p, g = _parse_diffie_hellman_params(diffie_hellman_params)
-        private_key = generate_private_diffie_hellman_key(p)
 
-        server_key = int(receive_message(client, bufsize))
+        while True:
+            diffie_hellman_params = receive_message(client, bufsize)
+            p, g = _parse_diffie_hellman_params(diffie_hellman_params)
+            private_key = generate_private_diffie_hellman_key(p)
+            
+            server_key = int(receive_message(client, bufsize))
 
-        public_key = generate_public_diffie_hellman_key(p, g, private_key)
-        send_message(client, public_key)
+            public_key = generate_public_diffie_hellman_key(p, g, private_key)
+            send_message(client, public_key)
 
-        secret = compute_shared_secret(p, private_key, server_key)
+            secret = compute_shared_secret(p, private_key, server_key)
 
-        message = input("Insira sua mensagem: ")
-        message = encrypt_using_caesar_cypher(message, secret)
+            message = input("Insira sua mensagem: ")
+            message = encrypt_using_caesar_cypher(message, secret)
 
-        send_message(client, message)
+            send_message(client, message)
 
 
 def _parse_diffie_hellman_params(params: str) -> tuple[int, int]:
