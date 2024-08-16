@@ -32,7 +32,7 @@ def start_server(
 
         conn, _ = server.accept()
 
-        print(f"Started server at {host}:{port}.")
+        print(f"Started server at port {port}.")
 
         with conn:
             send_message(conn, f"{p}, {g}")
