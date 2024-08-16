@@ -9,7 +9,7 @@ from src.diffie_hellman import (
 )
 
 
-def start_client(host: str = "", port: int = 1300, bufsize: int = 1024):
+def start_client(host: str = "localhost", port: int = 1300, bufsize: int = 1024):
     """Inicia uma conexão do cliente com o servidor.
 
     Args:

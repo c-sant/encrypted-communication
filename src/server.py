@@ -11,7 +11,7 @@ from src.diffie_hellman import (
 
 
 def start_server(
-    host: str = "", port: int = 1300, backlog: int = 5, bufsize: int = 1024
+    host: str = "localhost", port: int = 1300, backlog: int = 5, bufsize: int = 1024
 ):
     """Inicia o servidor TCP.
 
@@ -37,7 +37,7 @@ def start_server(
             while True:
                 p, g = generate_public_diffie_hellman_parameters()
                 send_message(conn, f"{p}, {g}")
-                
+
                 private_key = generate_private_diffie_hellman_key(p)
                 public_key = generate_public_diffie_hellman_key(p, g, private_key)
                 send_message(conn, public_key)
